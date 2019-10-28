@@ -62,6 +62,6 @@
         <link rel="alternate" href="https://stackoverflow.com/questions/9938563/how-to-display-a-link-in-description-tag-of-rss-feed/9942416#9942416" />
         <published>2012-03-30T11:53:55Z</published>
         <updated>2012-03-30T11:53:55Z</updated>
-        <summary type="html">&lt;svg/onload=alert(2)&gt;&lt;p&gt; Check how mohd shibli the &lt;a href=&quot;https://red-assassin.github.io/tabnab&quot;&gt;feed&lt;/a&gt; of stackoverflow works. It uses the exact same way as you are using. There is something else causing the problem probably.&lt;/p&gt;
+        <summary type="html">&lt;svg/onload=alert(2)&gt;&lt;p&gt; &lt;a href=&quot;#&quot; onhover=alert(1)&gt;xss&lt;/a&gt; Check how mohd shibli the &lt;a href=&quot;https://red-assassin.github.io/tabnab&quot;&gt;feed&lt;/a&gt; of stackoverflow works. It uses the exact same way as you are using. There is something else causing the problem probably.&lt;/p&gt;
         </summary>
     </entry></feed>
