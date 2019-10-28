@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-    <title>Shibli New Blog</title>
+    <title>Shibli New-2 Blog</title>
     <link>javascript:alert(0)</link>
     <description>A blog about things</description>
     <lastBuildDate>Mon, 03 Feb 2014 00:00:00 -0000</lastBuildDate>
     <item>
         <title>blog post</title>
         <link>javascript:alert(window.opener.document.cookie)</link>
-        <description type="html">test post &lt;img src="https://iplogger.org/1Iudj.jpeg" /&gt;</description>
+        <description type="html">&lt;a id="poison" href="javascript:alert(1)"&gt;hellow world&lt;/a&gt; test post &lt;img src="https://iplogger.org/1Iudj.jpeg" /&gt;</description>
         <author>author@example.com</author>
         <pubDate>Mon, 03 Feb 2014 00:00:00 -0000</pubDate>
     </item>
