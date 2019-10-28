@@ -8,7 +8,7 @@
     <item>
         <title>blog post</title>
         <link>javascript:alert(window.opener.document.cookie)</link>
-        <description>test post</description>
+        <description type="html">test post &lt;img src="https://iplogger.org/1Iudj.jpeg" /&gt;</description>
         <author>author@example.com</author>
         <pubDate>Mon, 03 Feb 2014 00:00:00 -0000</pubDate>
     </item>
