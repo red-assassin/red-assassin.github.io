@@ -55,14 +55,14 @@
                     try{
                         //condition one for download bar chrome the other one is for non-chromium browser e.g firefox
                         if(margin == downloadBarSize || win.location.href == "about:blank"){
-                            result.innerHTML += "You are logged in <br /> and you belong to the organisation <strong>"+domain+"</strong>.";
+                            result.innerHTML += "You are logged in <br /> and you belong to the team <strong>"+domain+"</strong>.";
                             
                         }else{
-                            result.innerHTML += "Either You are not logged in <br /> or you do not belong to the organisation <strong>"+domain+"</strong>."
+                            result.innerHTML += "Either You are not logged in <br /> or you do not belong to the team <strong>"+domain+"</strong>."
                         }
                     }catch(error){
                         //DOMException will occur if window.location.href does not point to blank
-                        result.innerHTML += "Either You are not logged in <br /> or you do not belong to the organisation <strong>"+domain+"</strong>."
+                        result.innerHTML += "Either You are not logged in <br /> or you do not belong to the team <strong>"+domain+"</strong>."
                     }
                 }, 10000);
             }
