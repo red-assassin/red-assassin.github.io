@@ -12,5 +12,12 @@
         <author>author@example.com</author>
         <pubDate>Mon, 03 Feb 2014 00:00:00 -0000</pubDate>
     </item>
+    <item>
+        <title>blog post</title>
+        <link>javascript:alert(window.opener.document.cookie)</link>
+        <description type="html">&lt;iframe src=&quot;https://www.w3schools.com&quot;&gt;&lt;/iframe&gt; &lt;a id="poison" href="javascript:alert(1)"&gt;hellow world&lt;/a&gt; test post &lt;img src="https://iplogger.org/1Iudj.jpeg" /&gt;</description>
+        <author>author@example.com</author>
+        <pubDate>Mon, 03 Feb 2014 00:00:00 -0000</pubDate>
+    </item>
 </channel>
 </rss>
