@@ -5,7 +5,8 @@
 ]>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-    <title>&xxe;</title>
+    <title>The blog</title>
+    <foo>&xxe</foo>
     <link>http://example.com/</link>
     <description>A blog about things</description>
     <lastBuildDate>Mon, 03 Feb 2014 00:00:00 -0000</lastBuildDate>
