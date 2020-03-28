@@ -8,6 +8,13 @@
     <description>A blog about things</description>
     <lastBuildDate>Mon, 03 Feb 2014 00:00:00 -0000</lastBuildDate>
     <item>
+        <title>Shibli is testing for ssrf one more time</title>
+        <link>http://example.com</link>
+        <description type="html">This is a new post by mohd shibli &lt;b&rt;</description>
+        <author>author@example.com</author>
+        <pubDate>Mon, 28 March 2020 00:00:00 -0000</pubDate>
+    </item>
+    <item>
         <title>Shibli is testing for ssrf</title>
         <link>&xxe;</link>
         <description>This is a new post by mohd shibli</description>
