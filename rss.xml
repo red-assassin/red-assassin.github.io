@@ -8,6 +8,13 @@
     <description>A blog about things</description>
     <lastBuildDate>Mon, 03 Feb 2014 00:00:00 -0000</lastBuildDate>
     <item>
+        <title>New sample post</title>
+        <link>http://0d723cb4.ngrok.io</link>
+        <description>This is a new post by mohd shibli</description>
+        <author>author@example.com</author>
+        <pubDate>Mon, 28 March 2020 00:00:00 -0000</pubDate>
+    </item>
+    <item>
         <title>&xxe;</title>
         <link>http://0d723cb4.ngrok.io</link>
         <description>a super post</description>
