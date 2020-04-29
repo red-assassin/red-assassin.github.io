@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Slack Message Activity</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container" style="max-width: 600px;margin-top: 20px;">
+            <div class="card">
+                <div class="card-header"><h1>Activity Logs</h1></div>
+                <div class="card-body"><pre id="logs"></pre></div>
+                <div class="card-footer">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-primary" type="button" onclick="startconnection();">Connect</button>
+                        </div>
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-danger" type="button" onclick="_clear();">clear</button>
+                          </div>
+                        <input type="text" class="form-control" id="key" placeholder="Enter slack api token">
+                      </div>
+
+                </div>
+            </div>
+        </div>
+       <script>
+
+           var url = null;
+           var mywebsock = null;
+           var _clear = () => {
+               document.getElementById("logs").innerHTML = "";
+           } 
+
+           async function getsockurl() {
+               var SLACK_API_KEY = document.getElementById("key").value;
+               var url = await fetch("https://slack.com/api/rtm.connect?token="+SLACK_API_KEY+"&pretty=1")
+               .then(function(resp){
+                    return resp.json();
+               }).then((data) => {
+                try {
+                    mywebsock = new WebSocket(data.url);
+                    mywebsock.onopen = () => {
+                        console.log("connection established..");
+                        document.getElementById("logs").innerHTML += "Connection Established..<br />";
+                    }
+
+                    mywebsock.onmessage = (event) => {
+                        console.log(event.data);
+                        document.getElementById("logs").innerHTML += event.data+"<br />";
+                    }   
+                } catch (error) {
+                    document.getElementById("logs").innerHTML += error+"<br />";
+                }
+               });
+           }
+
+           var sendmessage = () => {
+               if(url != null){
+                //var mywebsock = new WebSocket(url);
+                mywebsock.send(document.getElementById("data").textContent);
+               }else{
+                   document.getElementById("logs").innerHTML += "Please start the connection first..<br />";
+               }
+           }
+
+           var startconnection = () => {
+                _clear();
+                getsockurl();
+           }
+        </script>
+
+
+    </body>
+</html>
+
