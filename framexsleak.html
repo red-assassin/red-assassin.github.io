@@ -98,7 +98,7 @@ window.blocked = false;
                 win.location = "https://"+teamname+".slack.com/apps/manage/logs"
 
                 setTimeout(() => {
-                    if(win2.frames.length == 1){
+                    if(win2.frames.length >= 1){
                             result.innerHTML = "[+] You are the member of "+teamname+", let's check if you are an admin or not<br />";
                             checkAdmin(teamname, win)
                             
