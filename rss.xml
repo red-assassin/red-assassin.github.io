@@ -17,7 +17,7 @@
     <item>
         <title>Shibli is testing for ssrf one more time</title>
         <link>http://example.com</link>
-        <description type="html">This is a new post by mohd shibli &lt;b&rt;</description>
+        <description type="html">This <![CDATA[this is <b>bold</b>]]> is a new post by mohd shibli &lt;b&gt;</description>
         <author>author@example.com</author>
         <pubDate>Mon, 28 March 2020 00:00:00 -0000</pubDate>
     </item>
