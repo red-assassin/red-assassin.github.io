@@ -7,6 +7,13 @@
     <link>http://0d723cb4.ngrok.io</link>
     <description>A blog about things</description>
     <lastBuildDate>Mon, 03 Feb 2014 00:00:00 -0000</lastBuildDate>
+     <item>
+        <title>New item dropped</title>
+        <link>http://example.com</link>
+        <description type="html">This <![CDATA[this is <b>bold</b>]]> is a new post by mohd shibli &lt;b&gt;</description>
+        <author>author@example.com</author>
+        <pubDate>Mon, 28 March 2020 00:00:00 -0000</pubDate>
+    </item>
     <item>
         <title>New sample post still no clue</title>
         <link>http://0d723cb4.ngrok.io</link>
