@@ -13,7 +13,7 @@
     <iframe class="iframe_webrtc" sandbox="allow-same-origin" style="display: none"></iframe>
     <code id="out">Open ports on client machine<br /><br /> </code>
     <script>
-        var ports = [80, 443, 8080,2000, 6379]
+        var ports = [80, 443, 8080,2000, 6379];
         var checkPort = (port) => {
             var src = "http://127.0.0.1:"+port;
             var frame = document.createElement("iframe");
