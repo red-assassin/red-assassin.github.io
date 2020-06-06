@@ -7,7 +7,7 @@
     <lastBuildDate>Mon, 03 Feb 2014 00:00:00 -0000</lastBuildDate>
     <item>
         <title>new post</title>
-        <link>http://example.com</link>
+        <link>javascript:alert(1)</link>
         <description>a post</description>
         <author>author@example.com</author>
         <pubDate>Mon, 03 Feb 2014 00:00:00 -0000</pubDate>
