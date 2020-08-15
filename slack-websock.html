@@ -45,12 +45,15 @@
                     mywebsock = new WebSocket(data.url);
                     mywebsock.onopen = () => {
                         console.log("connection established..");
-                        document.getElementById("logs").innerHTML += "Connection Established..<br />";
+                        document.getElementById("logs").innerHTML += "Connection Established..<br /><br />";
                     }
 
                     mywebsock.onmessage = (event) => {
                         console.log(event.data);
-                        document.getElementById("logs").innerHTML += event.data+"<br />";
+                        //document.getElementById("logs").innerHTML += event.data+"<br />";
+                        json_data = JSON.parse(event.data);
+                        if(json_data['type'] == 'message')
+                            document.getElementById("logs").innerHTML += json_data['text']+"<br />";
                     }   
                 } catch (error) {
                     document.getElementById("logs").innerHTML += error+"<br />";
