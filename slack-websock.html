@@ -50,10 +50,10 @@
 
                     mywebsock.onmessage = (event) => {
                         console.log(event.data);
-                        //document.getElementById("logs").innerHTML += event.data+"<br />";
-                        json_data = JSON.parse(event.data);
-                        if(json_data['type'] == 'message')
-                            document.getElementById("logs").innerHTML += json_data['text']+"<br />";
+                        document.getElementById("logs").innerHTML += event.data+"<br />";
+                        //json_data = JSON.parse(event.data);
+                        //if(json_data['type'] == 'message')
+                        //    document.getElementById("logs").innerHTML += json_data['text']+"<br />";
                     }   
                 } catch (error) {
                     document.getElementById("logs").innerHTML += error+"<br />";
