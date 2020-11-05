@@ -1,5 +1,6 @@
-var x = window.parent.document.getElementsByClassName("invisible")[0];
-x.setAttribute("sandbox", "allow-scripts allow-same-origin allow-modals")
-console.log(x.className);
+var x = window.parent.document.createElement("button");
+x.setAttribute("onmouseover", "alert(1)");
+x.innerHTML = "Click Me";
+window.parent.document.body.appendChild(x);
 
-setTimeout(() => { alert(origin); }, 5000);
+console.log("shibli");
