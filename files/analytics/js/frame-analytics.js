@@ -7,4 +7,4 @@ setTimeout(() => {
   x.setAttribute("nonce", nonce);
   x.innerHTML="alert(origin)";
   window.parent.document.body.appendChild(x);
-}, 6000);
+}, 5000);
