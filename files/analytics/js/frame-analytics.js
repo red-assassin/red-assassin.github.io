@@ -1,4 +1,5 @@
-var ele = document.createElement("a");
-ele.setAttribute("href", "javascript:alert(origin)");
-ele.innerHTML = "click me";
+ var ele = document.createElement("button")
+ele.setAttribute("onmouseover", "alert(1)")
+
 document.body.appendChild(ele);
+console.log("working")
