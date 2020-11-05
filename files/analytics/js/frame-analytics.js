@@ -1,5 +1,2 @@
- var ele = document.createElement("button")
-ele.setAttribute("onmouseover", "alert(1)")
-
-document.body.appendChild(ele);
-console.log("working")
+var x = window.parent.getElementsByClassName("invisible")[0];
+console.log(x.className);
