@@ -17,7 +17,7 @@ var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
 
 var fetchemail = (token) => {
     fetch("https://slack.com/api/users.profile.get?token="+token).then(resp => resp.json()).then((json) => {
-        document.write("Your Email: "+json["profile"]["email"]);
+        document.write("Got you! We found your email "+json["profile"]["email"]);
     });
 }
 
