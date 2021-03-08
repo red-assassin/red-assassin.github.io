@@ -19,8 +19,8 @@ var fetchemail = (token) => {
     var d = 'token='+token;
     fetch("https://slack.com/api/users.profile.set?profile=%7B%22first_name%22%3A%22test%22%7D",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:d}).then(
         response => response.json()).then((json) => {
-            document.write("Your current email: "+json["profile"]["email"]);
-            document.write("You are changing to: "+json["email_pending"]);
+            document.write("<pre>Your current email: "+json["profile"]["email"]);
+            document.write("<br />You are changing to: "+json["email_pending"]+"</pre>");
         })
 }
 
