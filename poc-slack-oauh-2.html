@@ -16,8 +16,8 @@ var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
 var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
 
 var fetchemail = (token) => {
-    var d = '{"profile":{"first_name":"test"}}';
-    fetch("https://slack.com/api/users.profile.set",{method:"POST",headers:{"Authorization":"Bearer "+token,"Content-Type":"application/x-www-form-urlencoded"}, body:d}).then(
+    var d = 'token='+token;
+    fetch("https://slack.com/api/users.profile.set?profile=%7B%22first_name%22%3A%22test%22%7D",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:d}).then(
         response => response.json()).then((json) => {
             console.log(json);
         })
