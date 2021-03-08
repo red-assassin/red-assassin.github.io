@@ -17,7 +17,7 @@ var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
 
 var fetchemail = (token) => {
     var d = '{"profile":{"first_name":"test"}}';
-    fetch("https://slack.com/api/users.profile.set",{method:"POST",headers:{"Content-Type":"application/json"}, body:d}).then(
+    fetch("https://slack.com/api/users.profile.set",{method:"POST",headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"}, body:d}).then(
         response => response.json()).then((json) => {
             console.log(json);
         })
