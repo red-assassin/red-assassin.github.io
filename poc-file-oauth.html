@@ -19,7 +19,7 @@ var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
 
 var fetchObject = (token, fileid) => {
     var d = 'token='+token;
-    fetch("https://slack.com/api/filess.info?file="+fileid+"&token="+token).then(
+    fetch("https://slack.com/api/files.info?file="+fileid+"&token="+token).then(
         response => response.json()).then((json) => {
             document.write(json["content_html"]);
         })
