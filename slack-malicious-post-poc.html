@@ -2,9 +2,9 @@
 <html>
   <body>
     <script>
-      fetch("https://slack.com/api/files.info?file=F01M98MGDEX&pretty=1&token=xoxp-1021671975639-1007120194722-1873255362884-c50ced329470ee3fd5183defce4a238d").then(
+      fetch("https://slack.com/api/files.info?file=F01M98MGDEX&pretty=1&token=xoxp-1021671975639-1007120194722-1880140620929-584b7efc2caea751694f6a2f1a6358ab").then(
         resp => resp.json()).then((json) => {
-        console.log(json);
+        console.log(json["content_html"]);
       })
     </script>
   </body>   
