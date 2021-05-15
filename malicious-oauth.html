@@ -29,7 +29,7 @@ var get_conv_id = () => {
 	document.getElementById("result").innerHTML = "<br />[+] Fetching Slackbot channel name<br />"
 	var channel = "";
 	var token = localStorage.getItem("token")
-	fetch("https://slack.com/api/conversations.list?types=im%2Cmpim&token="+token).then(
+	fetch("https://slack.com/api/conversations.list?types=im&token="+token).then(
 		response => response.json()).then((json) => {
 		 for(var i = 0; i < json["channels"].length; i++){
 			if(json["channels"][i]["user"] == "USLACKBOT")
