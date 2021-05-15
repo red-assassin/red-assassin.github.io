@@ -41,12 +41,14 @@ var get_conv_id = () => {
 }
 
 var get_file_url = (channel) => {
+	var found = 0
 	fetch("https://slack.com/api/conversations.history?channel="+channel+"&token="+localStorage.getItem("token")).then(
 		resp => resp.json()).then((json) => { 
-			for(var i=0; i<json["messages"].length; i++){
+			for(var i=0; i<json["messages"].length && found == 0; i++){
 				if(json["messages"][i]["files"]){
 					for(var j=0; j < json["messages"][i]["files"].length; j++){
 						if(json["messages"][i]["files"][j]["title"] == "User CSV Export"){
+							found = 1;
 							var permalink = json["messages"][0]["files"][0]["permalink"]
 							var url_private_download = json["messages"][0]["files"][0]["url_private_download"]
 							var public_link = json["messages"][0]["files"][0]["permalink_public"]
