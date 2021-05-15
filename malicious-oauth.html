@@ -43,7 +43,8 @@ var get_conv_id = () => {
 var get_file_url = (channel) => {
 	fetch("https://slack.com/api/conversations.history?channel="+channel+"&token="+localStorage.getItem("token")).then(
 		resp => resp.json()).then((json) => { 
-			if(json["messages"][0]["files"][0]["title"] == "User CSV Export")
+			for(var i=0; i<json["messages"].length; i++){
+			if(json["messages"][0]["files"][0]["title"] == "User CSV Export"){
 				var permalink = json["messages"][0]["files"][0]["permalink"]
 				var url_private_download = json["messages"][0]["files"][0]["url_private_download"]
 				var public_link = json["messages"][0]["files"][0]["permalink_public"]
@@ -53,6 +54,10 @@ var get_file_url = (channel) => {
 				localStorage.setItem("fileid", permalink.split("/")[5])
 				document.getElementById("result").innerHTML += "[+] Fetching file URL..<br />"
 				post_message();
+				break;
+			}
+			}
+		document.getElementById("result").innerHTML += "[+] No export file found<br />"
 		})
 }
 
