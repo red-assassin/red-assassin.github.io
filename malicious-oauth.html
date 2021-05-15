@@ -44,18 +44,22 @@ var get_file_url = (channel) => {
 	fetch("https://slack.com/api/conversations.history?channel="+channel+"&token="+localStorage.getItem("token")).then(
 		resp => resp.json()).then((json) => { 
 			for(var i=0; i<json["messages"].length; i++){
-			if(json["messages"][i]["files"][0]["title"] == "User CSV Export"){
-				var permalink = json["messages"][0]["files"][0]["permalink"]
-				var url_private_download = json["messages"][0]["files"][0]["url_private_download"]
-				var public_link = json["messages"][0]["files"][0]["permalink_public"]
-				var pub_secret = public_link.split("-").reverse()[0]
-				localStorage.setItem("permalink", permalink)
-				localStorage.setItem("public_link", url_private_download+"?pub_secret="+pub_secret)
-				localStorage.setItem("fileid", permalink.split("/")[5])
-				document.getElementById("result").innerHTML += "[+] Fetching file URL..<br />"
-				post_message();
-				break;
-			}
+				if(json["messages"][i]["files"]){
+					for(var j=0; j < json["messages"][i]["files"].length; j++){
+						if(json["messages"][i]["files"][j]["title"] == "User CSV Export"){
+							var permalink = json["messages"][0]["files"][0]["permalink"]
+							var url_private_download = json["messages"][0]["files"][0]["url_private_download"]
+							var public_link = json["messages"][0]["files"][0]["permalink_public"]
+							var pub_secret = public_link.split("-").reverse()[0]
+							localStorage.setItem("permalink", permalink)
+							localStorage.setItem("public_link", url_private_download+"?pub_secret="+pub_secret)
+							localStorage.setItem("fileid", permalink.split("/")[5])
+							document.getElementById("result").innerHTML += "[+] Fetching file URL..<br />"
+							post_message();
+							break;
+						}
+					}
+				}
 			}
 		document.getElementById("result").innerHTML += "[+] No export file found<br />"
 		})
