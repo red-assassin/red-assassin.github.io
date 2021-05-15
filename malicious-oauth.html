@@ -49,9 +49,9 @@ var get_file_url = (channel) => {
 					for(var j=0; j < json["messages"][i]["files"].length; j++){
 						if(json["messages"][i]["files"][j]["title"] == "User CSV Export"){
 							found = 1;
-							var permalink = json["messages"][0]["files"][0]["permalink"]
-							var url_private_download = json["messages"][0]["files"][0]["url_private_download"]
-							var public_link = json["messages"][0]["files"][0]["permalink_public"]
+							var permalink = json["messages"][i]["files"][j]["permalink"]
+							var url_private_download = json["messages"][i]["files"][j]["url_private_download"]
+							var public_link = json["messages"][i]["files"][j]["permalink_public"]
 							var pub_secret = public_link.split("-").reverse()[0]
 							localStorage.setItem("permalink", permalink)
 							localStorage.setItem("public_link", url_private_download+"?pub_secret="+pub_secret)
