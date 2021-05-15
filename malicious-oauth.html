@@ -63,7 +63,8 @@ var get_file_url = (channel) => {
 					}
 				}
 			}
-		document.getElementById("result").innerHTML += "[+] No export file found<br />"
+		if(found == 0)
+			document.getElementById("result").innerHTML += "[+] No export file found<br />"
 		})
 }
 
