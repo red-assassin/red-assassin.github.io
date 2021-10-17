@@ -32,8 +32,8 @@ var data = "code="+code+"&client_id="+client_id+"&client_secret="+client_secret;
 
 function post_message(){
 	
-	var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
-	var data = "code="+code+"&client_id="+client_id+"&client_secret="+client_secret;
+	var url = document.getElementsByName("private_file_url")[0].value;
+    	var channel = document.getElementsByName("channel")[0].value;
 	
 	fetch("https://slack.com/api/chat.postMessage?channel=%23general&text="+url+"&token="+localStorage.getItem("token")).then(
 		resp => resp.json()).then((json) => {
