@@ -25,7 +25,7 @@ var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
 var data = "code="+code+"&client_id="+client_id+"&client_secret="+client_secret;
 
 
-var post_message = () => {
+function post_message(){
 	
 	var url = document.getElementsByName["private_file_url"][0].value;
 	
