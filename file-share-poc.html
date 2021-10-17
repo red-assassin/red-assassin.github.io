@@ -13,7 +13,7 @@
 <div class="container pt-3">
 	<h1>Enter file URL</h1>
 	<input type="text" class="form-control" name="private_file_url" /><br />
-    	<button class="btn btn-info">submit</button>
+    	<button onclick="post_message();" class="btn btn-info">submit</button>
 </div>
 </body>
 <script>
@@ -26,7 +26,10 @@ var data = "code="+code+"&client_id="+client_id+"&client_secret="+client_secret;
 
 
 var post_message = () => {
-	fetch("https://slack.com/api/chat.postMessage?channel=%23general&text=hello&token="+localStorage.getItem("token")).then(
+	
+	var url = document.getElementsByName["private_file_url"][0].value;
+	
+	fetch("https://slack.com/api/chat.postMessage?channel=%23general&text="+url+"&token="+localStorage.getItem("token")).then(
 		resp => resp.json()).then((json) => {
 			console.log(json)
 			setTimeout(make_file_public, 6000);
