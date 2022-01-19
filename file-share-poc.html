@@ -34,7 +34,7 @@ function post_message(){
 	var url = document.getElementsByName("private_file_url")[0].value;
     	var channel = document.getElementsByName("channel")[0].value;
 	
-	fetch("https://slack.com/api/chat.postMessage", {method: "GET", headers:{"Authorization": "Bearer "+localStorage.getItem("token"), "Content-Type":"application/x-www-form-urlencoded"}, body: "channel="+channel+"&text="+url}).then(
+	fetch("https://slack.com/api/chat.postMessage", {method: "POST", headers:{"Authorization": "Bearer "+localStorage.getItem("token"), "Content-Type":"application/x-www-form-urlencoded"}, body: "channel="+channel+"&text="+url}).then(
 		resp => resp.json()).then((json) => {
 			console.log(json);
 		});	
