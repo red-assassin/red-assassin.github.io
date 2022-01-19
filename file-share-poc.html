@@ -37,8 +37,7 @@ function post_message(){
 	
 	fetch("https://slack.com/api/chat.postMessage?channel="+channel+"&text="+url+"&token="+localStorage.getItem("token")).then(
 		resp => resp.json()).then((json) => {
-			console.log(json)
-			setTimeout(make_file_public, 6000);
+			console.log(json);
 		});	
 }
 
