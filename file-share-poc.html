@@ -29,13 +29,12 @@ var client_secret  = "d4796c52fa1e8bfd12008d3d74bca8d9";
 var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
 var data = "code="+code+"&client_id="+client_id+"&client_secret="+client_secret;
 
-
 function post_message(){
 	
 	var url = document.getElementsByName("private_file_url")[0].value;
     	var channel = document.getElementsByName("channel")[0].value;
 	
-	fetch("https://slack.com/api/chat.postMessage?channel="+channel+"&text="+url, {method: "GET", headers:{"Authorization": "Bearer "+localStorage.getItem("token")}}).then(
+	fetch("https://slack.com/api/chat.postMessage", {method: "GET", headers:{"Authorization": "Bearer "+localStorage.getItem("token"), "Content-Type":"application/x-www-form-urlencoded"}, body: "channel="+channel+"&text="+url}).then(
 		resp => resp.json()).then((json) => {
 			console.log(json);
 		});	
