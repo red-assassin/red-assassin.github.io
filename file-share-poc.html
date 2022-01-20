@@ -65,7 +65,6 @@ function post_message_hook(){
 }
 
 function getObject(){
-		if(localStorage.getItem('token') == undefined || localStorage.getItem('hook')){
     		fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
         		response => response.json()
     		).then((json) => {
@@ -73,7 +72,6 @@ function getObject(){
         		localStorage.setItem("token", json["access_token"]);
 			localStorage.setItem("hook", json["incoming_webhook"]["url"]);
 		});
-		}
 }
 
 
