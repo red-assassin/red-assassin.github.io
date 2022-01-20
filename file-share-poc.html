@@ -9,7 +9,7 @@
 </head>
 <body onload="getObject()">
 <div class="container pt-3">
-	<h1>Enter below details:</h1>
+	<h3>Send via app's bot token</h3>
 	<div class="row">
     <div class="col-md-8">
         <input placeholder="send text via bot token" type="text" class="form-control" name="private_file_url" /><br />
@@ -20,6 +20,18 @@
     </div>
     <button onclick="post_message();" class="btn btn-info">submit</button><br /><br />
 	<code id="output-1"></code>
+</div>
+<div class="container pt-3">
+	<h3>Send via app's webhook</h3>
+	<div class="row">
+    <div class="col-md-8">
+        <input placeholder="send text via incoming hook" type="text" class="form-control" name="private_file_url" /><br />
+    </div>
+    <div class="col-md-3">
+    </div>
+    </div>
+    <button onclick="post_message();" class="btn btn-info">submit</button><br /><br />
+	<code id="output-2"></code>
 </div>
 </body>
 <script>
@@ -38,6 +50,17 @@ function post_message(){
 	fetch("https://slack.com/api/chat.postMessage", {method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: "channel="+channel+"&text="+url+"&token="+localStorage.getItem('token')}).then(
 		resp => resp.json()).then((json) => {
 			document.getElementById("output-1").innerText = JSON.stringify(json);
+		});	
+}
+	
+function post_message_hook(){
+	
+	var url = document.getElementsByName("private_file_url")[1].value;
+    	//var channel = document.getElementsByName("channel")[1].value;
+	
+	fetch(localStorage.getItem('hook'), {method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: "payload="+"{'text':'"+url+"'}"}).then(
+		resp => resp.text()).then((text) => {
+			document.getElementById("output-2").innerText = text;
 		});	
 }
 
