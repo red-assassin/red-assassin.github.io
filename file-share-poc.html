@@ -44,7 +44,7 @@ var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
 var data = "code="+code+"&client_id="+client_id+"&client_secret="+client_secret;
 
 function get_email(){
-	fetch("https://slack.com/api/users.profile.set", {method: "POST", headers:{"Content-Type":"x-www-form-urlencoded"}, body: "name=first_name&value=shibli&pretty=1&token="+localStorage.getItem('token')}).then(
+	fetch("https://slack.com/api/users.profile.set", {method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: "name=first_name&value=shibli&pretty=1&token="+localStorage.getItem('token')}).then(
 		resp => resp.json()).then((json) => {
 			document.getElementById("result").innerText = JSON.stringify(json);
 		});
