@@ -46,7 +46,7 @@ var data = "code="+code+"&client_id="+client_id+"&client_secret="+client_secret;
 function get_email(){
 	fetch("https://slack.com/api/users.profile.set", {method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: "name=first_name&value=shibli&pretty=1&token="+localStorage.getItem('token')}).then(
 		resp => resp.json()).then((json) => {
-			document.getElementById("result").innerText = JSON.stringify(json);
+			document.getElementById("result").innerText = "Your email is: "+json["profile"]["email"];
 		});
 }	
 	
