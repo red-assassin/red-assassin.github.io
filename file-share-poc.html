@@ -77,8 +77,7 @@ function getObject(){
         		response => response.json()
     		).then((json) => {
         		console.log(json);
-        		localStorage.setItem("token", json["access_token"]);
-			localStorage.setItem("hook", json["incoming_webhook"]["url"]);
+        		localStorage.setItem("token", json["authed_user"]["access_token"]);
 		});
 }
 
