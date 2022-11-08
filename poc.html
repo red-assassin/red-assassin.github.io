@@ -16,7 +16,7 @@
         <h1>Abusing Slack Invite System PoC</h1>
         <p>The app uses bot permissions and can fetch email addresses of workspace members without proper oauth permissions</p>
     
-        <button type="button" class="btn btn-success" onclick="getObject();">Run PoC</button>
+        <button type="button" class="btn btn-success" onclick="startPoC();">Run PoC</button>
         <button type="button" class="btn btn-danger" onclick="fetchEmails();">Fetch Emails</button>
         <button type="button" class="btn btn-info" onclick="localStorage.clear();">Reset PoC</button>
                    
@@ -84,11 +84,7 @@ function getObject(){
         ).then((json) => {
             console.log(json);
             localStorage.setItem("token", json["access_token"])
-            startPoC();
         });
-    }else{
-        startPoC();
-    }
     
 }
 
