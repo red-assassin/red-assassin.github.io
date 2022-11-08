@@ -10,6 +10,18 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+        function getObject(){
+    if(localStorage.getItem("token") == "" || localStorage.getItem("token") == "undefined" || !localStorage.getItem("token")){
+        fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
+            response => response.json()
+        ).then((json) => {
+            console.log(json);
+            localStorage.setItem("token", json["access_token"])
+        });
+    
+}
+    </script>
 </head>
 <body onload="getObject()">
     <div class="container pt-3">
@@ -74,20 +86,8 @@ function startPoC() {
             localStorage.setItem("memberscount", json["members"].length)
             document.getElementsByClassName("preview")[0].innerHTML = "[+] Fetching member ids from #general<br />";
             createNewConversation(json["members"])
-        })
-}
-
-function getObject(){
-    if(localStorage.getItem("token") == "" || localStorage.getItem("token") == "undefined" || !localStorage.getItem("token")){
-        fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
-            response => response.json()
-        ).then((json) => {
-            console.log(json);
-            localStorage.setItem("token", json["access_token"])
         });
-    
 }
-
 
 </script>
 
