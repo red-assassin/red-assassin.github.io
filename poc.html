@@ -38,7 +38,7 @@
             var count = localStorage.getItem("memberscount");
             fetch("https://slack.com/api/conversations.listConnectInvites?&token="+token).then(
                     response => response.json()).then((json) => {
-                    for(var i=json["invites"].length - 1; i > (json["invites"].length - count); i--)
+                    for(var i=json["invites"].length - 1; i >= 0 - count); i--)
                         document.getElementsByClassName("preview")[0].innerHTML += json["invites"][i]["invite"]["recipient_email"]+"<br />";
                 })
         }
