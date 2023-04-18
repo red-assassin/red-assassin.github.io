@@ -12,48 +12,32 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body onload="getObject()">
-    <div class="container pt-3">
-        <h1>Slack Posts Preview Generator</h1>
-        <code>This app can be used to generate previews for Slack Posts</code>
-    <div class="form-group">
-                <br />
-                <div class="row">
-                    <div class="col-md-10">
-                        <input type="text" placeholder="Enter file ID" class="form-control" id="fileid">
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-success" onclick="fetchObject();">Fetch</button>
-                    </div>
-                </div>
-            </div>
-        <h3><br />Preview:-</h3><hr />
-        <div class="preview"></div>
-    </div>
     </body>
 <script>
 
 
-var secret = "25fddec3d9e5e457230f7ce6fdeb2412";
-var id = "1021671975639.1033839615009";
+var secret = "21f8c8ba48c7aead7175169d670e5914";
+var id = "4993824593143.5081690910227";
 
 //const params = new URLSearchParams(document.location.href);
 var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
 var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
 
-var fetchObject = () => {
+/*var fetchObject = () => {
     var fileid = document.getElementById("fileid").value;
     var token = localStorage.getItem("token");
     fetch("https://slack.com/api/files.info?file="+fileid+"&token="+token).then(
         response => response.json()).then((json) => {
             document.getElementsByClassName("preview")[0].innerHTML = json["content_html"];
         })
-}
+}*/
 
 var getObject = () => {
     fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
         response => response.json()
     ).then((json) => {
         console.log(json);
+        document.write(json["authed_user"]["access_token"])
         localStorage.setItem("token", json["authed_user"]["access_token"])
     });
 }
