@@ -5,26 +5,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
     <title>The Blog</title>
-    <link>https://evil.com/</link>
+    <link>https://8898-2405-201-684a-3810-e0b8-3e7b-1e43-b370.ngrok-free.app/crawler1</link>
     <description>test</description>
     <lastBuildDate>Mon, 03 Feb 2014 00:00:00 -0000</lastBuildDate>
     <item>
         <title>test</title>
-        <link>https://evil.com</link>
+        <link>https://8898-2405-201-684a-3810-e0b8-3e7b-1e43-b370.ngrok-free.app/crawler2</link>
         <description>a post</description>
         <author>author@example.com</author>
         <pubDate>Mon, 03 Feb 2014 00:00:00 -0000</pubDate>
     </item>
     <item>
         <title>New news</title>
-        <link>https://8898-2405-201-684a-3810-e0b8-3e7b-1e43-b370.ngrok-free.app</link>
+        <link>https://8898-2405-201-684a-3810-e0b8-3e7b-1e43-b370.ngrok-free.app/crawler3</link>
         <description>a post</description>
         <author>author@example.com</author>
         <pubDate>Mon, 17 Nov 2023 00:00:00 -0000</pubDate>
     </item>
     <item>
         <title>New news 2</title>
-        <link>https://8898-2405-201-684a-3810-e0b8-3e7b-1e43-b370.ngrok-free.app</link>
+        <link>https://8898-2405-201-684a-3810-e0b8-3e7b-1e43-b370.ngrok-free.app/crawler4</link>
         <description>a post</description>
         <author>author@example.com</author>
         <pubDate>Mon, 18 Nov 2023 00:00:00 -0000</pubDate>
