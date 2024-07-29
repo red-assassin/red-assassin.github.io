@@ -17,7 +17,14 @@
         <link>http://canarytokens.com/feedback/uyga7ppcdrgsav0nz96pohkvq/contact.php/</link>
         <description>a super post</description>
         <author>author@example.com</author>
-        <pubDate>Mon, 03 Feb 2014 00:00:00 -0000</pubDate>
+        <pubDate>Mon, 03 Feb 2024 00:00:00 -0000</pubDate>
+    </item>
+    <item>
+        <title>New post by shibli for xss</title>
+        <link>http://canarytoksens.com/feedback/uyga7ppcdrgsav0nz96pohkvq/contact.php/</link>
+        <description>a ssuper post</description>
+        <author>author@example.com</author>
+        <pubDate>Sun, 28 Jul 2024 00:00:00 -0000</pubDate>
     </item>
 </channel>
 </rss>
